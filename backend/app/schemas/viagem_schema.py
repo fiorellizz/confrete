@@ -24,3 +24,15 @@ class ViagemResponse(ViagemBase):
 
     class Config:
         from_attributes = True
+
+class ViagemUpdate(BaseModel):
+    data: Optional[date] = None
+    peso: Optional[float] = None
+    valor_por_ton: Optional[float] = None
+    valor_total: Optional[float] = None
+    descontos: Optional[float] = None
+    adiantamento: Optional[float] = None
+    saldo: Optional[float] = None
+    
+    class Config:
+        from_attributes = True

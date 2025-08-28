@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import date
+from typing import Optional
 
 class DespesaBase(BaseModel):
     data: date
@@ -18,3 +19,11 @@ class DespesaResponse(DespesaBase):
 
     class Config:
         from_attributes = True  # Pydantic v2
+
+class DespesaUpdate(BaseModel):
+    descricao: Optional[str] = None
+    valor: Optional[float] = None
+    data: Optional[date] = None
+
+    class Config:
+        from_attributes = True

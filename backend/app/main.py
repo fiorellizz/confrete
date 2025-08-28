@@ -10,3 +10,7 @@ app = FastAPI(title="Controle de Viagens")
 # Rotas
 app.include_router(viagem_controller.router)
 app.include_router(despesa_controller.router)
+
+@app.get("/ping")
+async def root():
+    return {"message": "pong"}

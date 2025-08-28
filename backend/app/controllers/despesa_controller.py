@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app.config.database import get_db
-from app.schemas.despesa_schema import DespesaCreate, DespesaResponse
+from app.schemas.despesa_schema import DespesaCreate, DespesaUpdate, DespesaResponse
 from app.services import despesa_service
 
 router = APIRouter(prefix="/despesas", tags=["Despesas"])
@@ -19,6 +19,13 @@ def listar_despesas(viagem_id: int, db: Session = Depends(get_db)):
 @router.get("/{despesa_id}", response_model=DespesaResponse)
 def buscar_despesa(despesa_id: int, db: Session = Depends(get_db)):
     despesa = despesa_service.buscar_despesa(db, despesa_id)
+    if not despesa:
+        raise HTTPException(status_code=404, detail="Despesa não encontrada")
+    return despesa
+
+@router.patch("/{despesa_id}")
+def update_despesa_controller(despesa_id: int, despesa_update: DespesaUpdate, db: Session = Depends(get_db)):
+    despesa = despesa_service.editar_despesa(db, despesa_id, despesa_update)
     if not despesa:
         raise HTTPException(status_code=404, detail="Despesa não encontrada")
     return despesa
